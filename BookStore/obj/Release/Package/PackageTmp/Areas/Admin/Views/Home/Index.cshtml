@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="p-4 my-4 mx-2">
+    <h2 class="text-2xl font-bold  my-4">Home</h2>
+
+    <div class="bg-white my-4 rounded flex justify-between text-black border-2 p-4 border-black font-semibold text-xl ">
+        <div>
+            Số lượng user:
+        </div>
+        <div>
+            @ViewBag.totalUser
+        </div>
+    </div>
+
+    <div class="bg-white my-4 rounded flex justify-between text-black border-2 p-4 border-black font-semibold text-xl ">
+        <div>
+            Số lượng sản phẩm:
+        </div>
+        <div>
+            @ViewBag.totalProduct
+        </div>
+    </div>
+
+    <div class="bg-white my-4 rounded flex justify-between text-black border-2 p-4 border-black font-semibold text-xl ">
+        <div>
+            Số lượng đơn đặt:
+        </div>
+        <div>
+            @ViewBag.totalOrder
+        </div>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = "User";
+}
+
+<div class="p-4 my-4 mx-2">
+    <h2 class="text-2xl font-bold  my-4">Users</h2>
+    
+    <div class="text-right p-4">
+        <a href="/Admin/User/Create" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Tạo mới</a>
+    </div>
+    <div>
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Tên
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Username
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Địa chỉ
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Số điện thoại
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Role
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Tác vụ
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                @user.GetType().GetProperty("Name").GetValue(user, null)
+                            </td>
+                            <td class="px-6 py-4">
+                                @user.GetType().GetProperty("UserName").GetValue(user, null)
+                            </td>
+                            <td class="px-6 py-4">
+                                @user.GetType().GetProperty("Address").GetValue(user, null)
+                            </td>
+                            <td class="px-6 py-4">
+                                @user.GetType().GetProperty("PhoneNumber").GetValue(user, null)
+                            </td>
+                            <td class="px-6 py-4">
+                                @{
+                                    foreach (var role in ViewBag.Roles)
+                                    {
+                                        if (role.Id == @user.GetType().GetProperty("RoleId").GetValue(user, null))
+                                        {
+                                            <div>@role.Name</div>
+                                        }
+                                    }
+                                }
+                            </td>
+                            <td class="px-6 py-4">
+                                <a class="hover:text-blue-600 duration-300 " href="/Admin/User/Detail/@user.GetType().GetProperty("Id").GetValue(user, null)">
+                                    Chi tiết
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,93 @@
+﻿@model List<BookStore.Models.Order>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="p-4 my-4 mx-2">
+    <h2 class="text-2xl font-bold  my-4">Users</h2>
+
+    <div>
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Id đơn hàng
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Ngày đặt
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Tình trạng
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Tác vụ
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                @item.OrderId
+                            </td>
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                @item.OrderDate.ToString()
+                            </td>
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                @item.Status
+                            </td>
+                            <td>
+                                <div class=" flex justify-around items-center h-full">
+
+                                    <a class="hover:text-blue-600 duration-300 " href="/Admin/Order/Detail/@item.OrderId">
+                                        Chi tiết
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="flex justify-center ">
+                <ul class="inline-flex -space-x-px text-sm">
+                    @{
+                        int currentPage = ViewBag.CurrentPage;
+                        int maxPage = ViewBag.MaxPage;
+                        int start = currentPage - 2 > 0 ? currentPage - 2 : 1;
+                        int end = currentPage + 2 <= maxPage ? currentPage + 2 : maxPage;
+                        if (currentPage != 1)
+                        {
+                            <li>
+                                <a href="/Admin/Order/Index?page=@(currentPage-1)" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                            </li>
+                        }
+                        for (int i = start; i <= end; i++)
+                        {
+                            if (currentPage == i)
+                            {
+                                <li>
+                                    <a href="#" class="flex items-center bg-blue-500 justify-center px-3 h-8 leading-tight text-slate-200 border border-gray-300 hover:bg-blue-700 hover:text-white">@i</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a href="/Admin/Order?page=@i" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">@i</a>
+                                </li>
+                            }
+                        }
+                        if (currentPage != maxPage)
+                        {
+                            <li>
+                                <a href="/Admin/Order?page=@(currentPage+1)" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Tailwind</id>
+    <version>0.6.1</version>
+    <title>Tailwind</title>
+    <authors>Cody Mullins</authors>
+    <owners>Cody Mullins</owners>
+    <licenseUrl>https://www.nuget.org/packages/Tailwind/0.6.1/license</licenseUrl>
+    <projectUrl>https://github.com/codymullins/dotnet-tailwind</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Automatically add Tailwind to your Blazor application</description>
+    <summary />
+    <releaseNotes>Updated readme for simplified instructions</releaseNotes>
+    <tags>tailwind blazor</tags>
+  </metadata>
+</package>

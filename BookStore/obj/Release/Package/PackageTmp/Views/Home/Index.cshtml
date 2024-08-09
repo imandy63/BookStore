@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<div class="flex flex-col items-center">
+    <div class="flex mt-6 max-w-[1150px] justify-center w-screen relative">
+        <h1 class="text-2xl font-bold bg-[#fff] z-30 px-12 text-center">
+            Sách
+        </h1>
+        <div class="border-b border-[#000] w-full absolute left-0 top-[50%]"></div>
+    </div>
+    <div class="flex my-4 px-4 justify-center flex-wrap gap-8 max-w-[1150px] w-screen">
+        @foreach (var item in ViewBag.product1)
+        {
+            <div class="hover:shadow-[0_0_5px_0_rgb(180,180,180)] w-1/5 duration-300 flex flex-col justify-between ">
+                <img width="100%" src="/img/products/@item.ImageURL" />
+                <div>
+                    <a href="/Product/Detail/@item.Id"
+                       class="text-xl font-medium text-center block hover:text-[#3ac2cc] duration-300">
+                        @item.Name
+                    </a>
+                    <div class="font-bold text-center text-[18px]">@item.Price đ</div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="my-4">
+        <a href="/Product/Book" class="hover:text-[#3ac2cc]">Xem thêm</a>
+    </div>
+    <div class="flex mt-6 max-w-[1150px] justify-center w-screen relative">
+        <h1 class="text-2xl font-bold bg-[#fff] z-30 px-12 text-center">
+            Phụ kiện
+        </h1>
+        <div class="border-b border-[#000] w-full absolute left-0 top-[50%]"></div>
+    </div>
+    <div class="flex my-4 px-4 justify-center flex-wrap gap-8 max-w-[1150px] w-screen">
+        @foreach (var item in ViewBag.product2)
+        {
+            <div class="hover:shadow-[0_0_5px_0_rgb(180,180,180)] w-1/5 duration-300 flex flex-col justify-between ">
+                <img width="100%" src="/img/products/@item.ImageURL" />
+                <div>
+                    <a href="/Product/Detail/@item.Id"
+                       class="text-xl font-medium text-center block hover:text-[#3ac2cc] duration-300">
+                        @item.Name
+                    </a>
+                    <div class="font-bold text-center text-[18px]">@item.Price đ</div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="my-4">
+        <a href="/Product/Accessory" class="hover:text-[#3ac2cc]">Xem thêm</a>
+    </div>
+</div>

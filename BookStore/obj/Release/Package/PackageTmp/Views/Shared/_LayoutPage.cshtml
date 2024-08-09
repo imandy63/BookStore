@@ -1,0 +1,262 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/35c6f8aae0.js" crossorigin="anonymous"></script>
+    <script src="/Scripts/jquery-1.10.2.js"></script>
+    <script src="/Scripts/jquery.validate.min.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <style>
+        .field-validation-error {
+            color: red;
+        }
+    </style>
+</head>
+<body class="h-screen overflow-y-auto">
+    <main class="h-full overflow-x-hidden">
+        <header>
+            <!-- Contact and login -->
+            <div class="bg-[#b5e2ef] h-[42px] flex justify-between items-center px-8 text-[12.8px]">
+                <!-- Left-side -->
+                <div class="flex gap-4 ">
+                    <a href="#Store" class="flex text-[#666666D9] justify-center gap-2 items-center hover:text-black duration-300 ">
+                        <i class="fa-solid fa-location-pin"></i>
+                        <div>Cửa hàng</div>
+                    </a>
+                    <div class="flex text-[#666666D9] justify-center gap-2 items-center">
+                        <i class="fa-solid fa-phone"></i>
+                        <div>0123213121</div>
+                    </div>
+                </div>
+                <!-- Right side -->
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="relative w-[100px]">
+                        <button id="showAccountOption" class="cursor-pointer hidden sm:block  hover text-[#666666D9] duration-300 hover:text-[#282828] font-bold">Tài khoản</button>
+                        <div id="accountOption" class="absolute hidden top-full w-full right-0 bg-[#fff] border border-[#aaa] flex flex-col items-center ">
+                            <a href="/Home/ProfileUpdate" class="block hover:bg-slate-200 text-center w-full p-2 font-semibold">Thay đổi thông tin</a>
+                            <a href="/Order/History" class="block hover:bg-slate-200 text-center w-full p-2 font-semibold">Lịch sử mua</a>
+                            <div class="w-full">
+                                <form method="post" action="/Auth/Logout">
+                                    <button type="submit" class="w-full hover:bg-slate-200 p-2 font-semibold">
+                                        Đăng xuất
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="hidden sm:block text-[#666666D9] duration-300 hover:text-[#282828] font-bold">
+                        <a href="/Auth/Login">Đăng nhập</a>
+                    </div>
+                }
+            </div>
+            <!-- Logo, search, Mobile nav and cart -->
+            <div class="flex justify-between p-4 items-center">
+                <!-- Search -->
+                <form class="sm:block hidden" action="/Product/Index" method="get" target="_self">
+                    <div class="text-sm relative">
+                        <input class="p-1 outline-none border-b border-[#3ac2cc]"
+                               type="text"
+                               name="search"
+                               id="search"
+                               placeholder="Tìm kiếm sách" />
+                        <button type="submit"
+                                class="duration-300 w-[32px] p-1 absolute right-0 top-0 hover:bg-[#446084] hover:text-white">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </form>
+                <!-- Responsive nav & button -->
+                <button onclick="OpenNav()" class="block sm:hidden hover:text-[#3ac2cc] duration-300">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <nav id="responsiveNav"
+                     class="hidden absolute w-screen h-screen left-0 z-50 top-0">
+                    <!-- Close -->
+                    <div onclick="CloseNav()"
+                         id="closeResponsive"
+                         class="bg-[rgba(0,0,0,0.3)] w-screen h-full relative"></div>
+                    <button onclick="CloseNav()"
+                            class="text-[rgba(120,120,120,0.8)] text-2xl absolute right-[20px] top-[20px] z-[51] w-[25px] h-[25px]">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <!-- Responsive Nav -->
+                    <div class="w-[260px] bg-[rgba(255,255,255,0.95)] h-screen absolute top-0 left-0">
+                        <nav>
+                            <form class="p-[15px] pl-[20px] flex max-w-full w-[80vw]" action="/Product/Index" method="get" target="_self">
+                                <div>
+                                    <input class="outline-none w-full border h-[34px] focus:border-[rgb(200,200,200)] hover:border-[rgb(200,200,200)]"
+                                           type="search"
+                                           name="search"
+                                           id="search" />
+                                </div>
+                                <div>
+                                    <button class="border bg-[#b5e2eb] hover:bg-[#134b5f] duration-300 text-white w-[35px] h-[35px] border-[rgba(0,0,0,0.05)]">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </button>
+                                </div>
+                            </form>
+                            <a href="/Home/Index"
+                               class="text-[rgba(102,102,102,0.85)] hover:bg-[rgb(240,240,240)] text-[12.6px] font-medium block hover:text-[rgba(17,17,17,0.85)] py-[15px] pl-[20px] border-t border-[rgb(240,240,240)] duration-300">HOME</a>
+                            <a href="/Product/Index"
+                               class="text-[rgba(102,102,102,0.85)] hover:bg-[rgb(240,240,240)] text-[12.6px] font-medium block hover:text-[rgba(17,17,17,0.85)] py-[15px] pl-[20px] border-t border-[rgb(240,240,240)] duration-300">TẤT CẢ</a>
+                            <a href="/Product/Book"
+                               class="text-[rgba(102,102,102,0.85)] hover:bg-[rgb(240,240,240)] text-[12.6px] font-medium block hover:text-[rgba(17,17,17,0.85)] py-[15px] pl-[20px] border-t border-[rgb(240,240,240)] duration-300">SÁCH</a>
+                            <a href="/Product/Accessory"
+                               class="text-[rgba(102,102,102,0.85)] hover:bg-[rgb(240,240,240)] text-[12.6px] font-medium block hover:text-[rgba(17,17,17,0.85)] py-[15px] pl-[20px] border-t border-[rgb(240,240,240)] duration-300">PHỤ KIỆN</a>
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a href="/Home/UpdateProfile"
+                               class="text-[rgba(102,102,102,0.85)] hover:bg-[rgb(240,240,240)] text-[12.6px] font-medium block hover:text-[rgba(17,17,17,0.85)] py-[15px] pl-[20px] border-t border-[rgb(240,240,240)] duration-300">THAY ĐỔI THÔNG TIN</a>
+                                <a href="/Cart/History"
+                               class="text-[rgba(102,102,102,0.85)] hover:bg-[rgb(240,240,240)] text-[12.6px] font-medium block hover:text-[rgba(17,17,17,0.85)] py-[15px] pl-[20px] border-t border-[rgb(240,240,240)] duration-300">LỊCH SỬ MUA</a>
+                                <div class="relative w-full">
+                                    <form method="post" action="/Auth/Logout">
+                                        <button class="w-full text-left text-[rgba(102,102,102,0.85)] hover:bg-[rgb(240,240,240)] text-[12.6px] font-medium block hover:text-[rgba(17,17,17,0.85)] py-[15px] pl-[20px] border-t border-[rgb(240,240,240)] duration-300" type="submit">
+                                            ĐĂNG XUẤT
+                                        </button>
+                                    </form>
+                                </div>
+                            }
+                            else
+                            {
+                                <a href="/Auth/Login"
+                                   class="text-[rgba(102,102,102,0.85)] hover:bg-[rgb(240,240,240)] text-[12.6px] font-medium block hover:text-[rgba(17,17,17,0.85)] py-[15px] pl-[20px] border-t border-[rgb(240,240,240)] duration-300">ĐĂNG NHẬP</a>
+                            }
+                        </nav>
+                    </div>
+                </nav>
+                <!-- Logo -->
+                <a class="block" href="/Home/Index">
+                    <img src="/img/LOGO.jpg" width="170" alt="" />
+                </a>
+                <!-- Cart -->
+                <a href="/Order/Cart"
+                   class="text-[#666666D9] hover:text-[#3ac2cc] cursor-pointer gap-2 flex font-bold font-xl">
+                    <div class="sm:block hidden">GIỎ HÀNG</div>
+                    <div>
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                </a>
+            </div>
+            <!-- Nav bar -->
+            <div class="sm:block hidden">
+                <ul class="flex justify-center">
+                    <li>
+                        <a href="/Home/Index"
+                           class="block border-b-4 text-[#666666D9] font-bold border-transparent hover:text-white hover:border-[#3ac2cc] hover:bg-[#b5e2eb] duration-300 px-4 py-3">
+                            Trang chủ
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Product/Index"
+                           class="block border-b-4 text-[#666666D9] font-bold border-transparent hover:text-white hover:border-[#3ac2cc] hover:bg-[#b5e2eb] duration-300 px-4 py-3">
+                            Tất cả
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Product/book"
+                           class="border-b-4 block text-[#666666D9] font-bold border-transparent hover:text-white hover:border-[#3ac2cc] hover:bg-[#b5e2eb] duration-300 px-4 py-3">
+                            Sách
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Product/Accessory"
+                           class="border-b-4 block text-[#666666D9] font-bold border-transparent hover:text-white hover:border-[#3ac2cc] hover:bg-[#b5e2eb] duration-300 px-4 py-3">
+                            Phụ kiện
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        @RenderBody()
+        <footer>
+            <!-- line -->
+            <div class="w-screen bg-[#3ac2cc] h-1 my-6"></div>
+            <!-- Lower footer -->
+            <div class="my-8 flex flex-wrap justify-center gap-8 p-4 items-center lg:justify-between">
+                <div>
+                    <div class="flex flex-col items-center row-auto col-auto">
+                        <a href="/Home/Index">
+                            <img src="/img/logo.jpg" width="265" alt="" />
+                        </a>
+                        <div>
+                            <a href="facebook.com"
+                               class="hover:text-[#3ac2cc] px-2 duration-300 text-xl">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                            <a href="instagram.com"
+                               class="hover:text-[#3ac2cc] px-2 duration-300 text-xl">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+                            <a href="twitter.com"
+                               class="hover:text-[#3ac2cc] px-2 duration-300 text-xl">
+                                <i class="fa-brands fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="leading-8">
+                    <h2 class="text-2xl font-semibold">
+                        LIÊN HỆ:
+                    </h2>
+                    <div>
+                        Địa chỉ: 140 Lê Trọng Tấn, Tây Thạnh, Tân Phú, Thành phố Hồ Chí Minh, Việt Nam
+                    </div>
+                    <div>
+                        SĐT: 0984678932
+                    </div>
+                </div>
+                <div id="Store">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.0672956497715!2d106.62608107488298!3d10.806157889344455!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752be27d8b4f4d%3A0x92dcba2950430867!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBDw7RuZyBUaMawxqFuZyBUUC4gSOG7kyBDaMOtIE1pbmg!5e0!3m2!1svi!2s!4v1698749592774!5m2!1svi!2s" width="400" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+            <!-- Line -->
+            <div class="w-screen bg-[#3ac2cc] h-1 my-6"></div>
+        </footer>
+    </main>
+    <script>
+        const nav = document.getElementById("responsiveNav");
+        const dropdown = document.getElementById("dropdownList");
+        const accountOption = document.querySelector("#accountOption");
+        function OpenNav() {
+            nav.classList.remove("hidden");
+        };
+
+        function CloseNav() {
+            nav.classList.add("hidden");
+        };
+        window.onclick = function (e) {
+            if (!e.target.matches("#accountOption")) {
+                if (accountOption != null) {
+                    if (
+                      e.target.matches("button#showAccountOption") &&
+                      accountOption.classList.contains("hidden")
+                    ) {
+                        accountOption.classList.remove("hidden");
+                    } else {
+                        accountOption.classList.add("hidden");
+                    }
+                }
+            }
+            if (!e.target.matches("#dropdownList")) {
+                if (
+                  e.target.matches("button#showDropdown") &&
+                  dropdown.classList.contains("hidden")
+                ) {
+                    dropdown.classList.remove("hidden");
+                } else {
+                    dropdown.classList.add("hidden");
+                }
+            }
+        };
+    </script>
+</body>
+</html>

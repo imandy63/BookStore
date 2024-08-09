@@ -1,0 +1,120 @@
+﻿@model List<BookStore.Models.Product>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="p-4 my-4 mx-2">
+    <h2 class="text-2xl font-bold  my-4">Products</h2>
+
+    <div class="text-right p-4">
+        <a href="/Admin/Product/Create" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Tạo mới</a>
+    </div>
+    <div>
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Ảnh
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Tên sản phẩm
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Tên tác giả
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Thể loại
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">
+                            Số lượng
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Giá
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Tác vụ
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model)
+                    {
+                        <tr>
+                            <td class="w-[100px]">
+                                @if (product.ImageURL == "")
+                                {
+                                    <div class="w-full">
+                                        <img class="w-full max-h-[300px]" src="/img/noImageProduct.jpg" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="w-full">
+                                        <img class="w-full max-h-[300px]" src="/img/products/@product.ImageURL" />
+                                    </div>                                }
+                            </td>
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                @product.Name
+                            </td>
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                @product.AuthorName
+                            </td>
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                @product.Genre.Name
+                            </td>
+                            <td scope="row" class="px-6 text-center py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                @product.Quantity
+                            </td>
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                @product.Price
+                            </td>
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <a class="hover:text-blue-600 duration-300 " href="/Admin/Product/Detail/@product.Id">
+                                    Chi tiết
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="flex justify-center ">
+                <ul class="inline-flex -space-x-px text-sm">
+                    @{
+                        int currentPage = ViewBag.CurrentPage;
+                        int maxPage = ViewBag.MaxPage;
+                        int start = currentPage - 2 > 0 ? currentPage - 2 : 1;
+                        int end = currentPage + 2 <= maxPage ? currentPage + 2 : maxPage;
+                        if (currentPage != 1)
+                        {
+                            <li>
+                                <a href="/Admin/Product/Index?page=@(currentPage-1)" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                            </li>
+                        }
+                        for (int i = start; i <= end; i++)
+                        {
+                            if (currentPage == i)
+                            {
+                                <li>
+                                    <a href="#" class="flex items-center bg-blue-500 justify-center px-3 h-8 leading-tight text-slate-200 border border-gray-300 hover:bg-blue-700 hover:text-white">@i</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a href="/Admin/Product/?page=@i" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">@i</a>
+                                </li>
+                            }
+                        }
+                        if (currentPage != maxPage)
+                        {
+                            <li>
+                                <a href="/Admin/Product?page=@(currentPage+1)" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

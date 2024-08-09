@@ -1,0 +1,99 @@
+﻿@model BookStore.Models.Product
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<div class="flex items-center flex-col">
+    <div class="flex justify-center flex-col lg:flex-row max-w-[1150px] w-full">
+        <div>
+            @if (Model.ImageURL != "")
+            {
+                <img class="lg:max-w-[560px] w-screen lg:w-[50vw]" src="/img/products/@Model.ImageURL" alt="">
+            }
+            else
+            {
+                <img class="lg:max-w-[560px] w-screen lg:w-[50vw]" src="/img/noImageProduct.jpg" alt="">
+            }
+        </div>
+        <div class="p-4">
+            <div>
+                <a href="/Home/Index" class="font-semibold duration-300 color-[#333333b2] hover:text-black">
+                    TRANG CHỦ
+                </a>
+                /
+                <a href="/Product/Index" class="font-semibold duration-300 color-[#333333b2] hover:text-black">
+                    SẢN PHẨM
+                </a>
+            </div>
+            <div class="relative font-bold text-black text-2xl my-4">
+                @Model.Name
+                <div class="absolute left-0 top-full h-[3px] w-[20px] bg-[#0000001a] my-4"></div>
+            </div>
+            <div class="py-4 font-semibold text-black text-2xl">@Model.Price đ</div>
+            @using(Html.BeginForm("AddProduct","Order",FormMethod.Post)){
+                @Html.TextBoxFor(item => item.Id, new {@class = "hidden"})
+                <input type="number" name="Quantity" value="1" class="outline-none w-[50px] h-[40px] border text xl p-2" min="1" max="@Model.Quantity"/>
+                if(Model.IsAvailable){
+                    <button class="text-[#fff] font-bold bg-[#3ac2cc] py-2 px-4 duration-300 hover:bg-[#446084]">Thêm vào giỏ</button>
+                } else {
+                    <button class="text-[#fff] font-bold bg-[#3ac2cc] py-2 px-4 duration-300" disabled>Hết hàng</button>
+                }
+            }
+            <!-- line -->
+            <div class="w-full h-[1px] my-4 bg-[#0000001a]"></div>
+
+            <div class="flex justify-between gap-4 lg:flex-row flex-col">
+                <div class="lg:max-w-[250px] flex items-center gap-2">
+                    <div class="flex justify-center items-center w-[30px] h-[30px]">
+                        <i class="fa-solid fa-dollar-sign"></i>
+                    </div>
+                    <div class="text-sm">
+                        Chi phí rẻ
+                    </div>
+                </div>
+                <div class="lg:max-w-[250px] flex items-center gap-2">
+                    <div class="flex justify-center items-center w-[30px] h-[30px]">
+                        <i class="fa-solid fa-stamp"></i>
+                    </div>
+                    <div class="text-sm">
+                        Sách chính hãng
+                    </div>
+                </div>
+            </div>
+
+            <!-- line -->
+            <div class="w-full h-[1px] my-4 bg-[#0000001a]"></div>
+        </div>
+    </div>
+    <div class="max-w-[1150px] w-full">
+        <!-- line -->
+        <div class="w-full h-[1px] my-4 bg-[#0000001a]"></div>
+
+        <div class="p-2">
+            <h1 class="font-semibold text-[666666d9] text-2xl my-4">Chi tiết sản phẩm</h1>
+            <ul class="list-disc px-6">
+                <li class="text-[#777777] my-2">
+                    Thể loại
+                    <br />
+                    @Model.Genre.Name
+                </li>
+                @if(Model.AuthorName!=""){
+
+                    <li class="text-[#777777] my-2">
+                        Tác giả
+                        <br />
+                        @Model.AuthorName đ
+                </li>
+                }
+                <li class="text-[#777777] my-2">
+                    Tồn kho
+                    <br />
+                    @Model.Quantity
+                </li>
+            </ul>
+        </div>
+
+        <!-- line -->
+        <div class="w-full h-[1px] my-4 bg-[#0000001a]"></div>
+    </div>
+</div>

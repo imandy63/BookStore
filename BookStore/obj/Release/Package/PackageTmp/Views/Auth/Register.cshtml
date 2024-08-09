@@ -1,0 +1,54 @@
+﻿@model BookStore.ViewModel.RegisterVM
+
+@{
+    ViewBag.Title = "Register";
+}
+<div>
+    <div class="flex justify-center">
+        @using (Html.BeginForm("Register", "Auth", FormMethod.Post, new { @class = "p-6 max-w-[1150px] w-[90vw]" }))
+        {
+            <h1 class="text-2xl font-bold">ĐĂNG KÝ</h1>
+            <div class="">
+                <div class="my-4">
+                    @Html.LabelFor(temp => temp.Username, new { @class = "text-black my-1 block font-normal" })
+                    @Html.TextBoxFor(temp => temp.Username, new { @class = "block p-2 border w-full h-[36px] focus:border-[rgb(200,200,200)] hover:border-[rgb(200,200,200)] outline-none" })
+                    @Html.ValidationMessageFor(temp => temp.Username)
+                </div>
+                <div class="my-4">
+                    @Html.LabelFor(temp => temp.Name, new { @class = "text-black my-1 block font-normal" })
+                    @Html.TextBoxFor(temp => temp.Name, new { @class = "block p-2 border w-full h-[36px] focus:border-[rgb(200,200,200)] hover:border-[rgb(200,200,200)] outline-none" })
+                    @Html.ValidationMessageFor(temp => temp.Name)
+                </div>
+                <div class="my-4">
+                    @Html.LabelFor(temp => temp.PhoneNumber, new { @class = "text-black my-1 block font-normal" })
+                    @Html.TextBoxFor(temp => temp.PhoneNumber, new { @class = "block p-2 border w-full h-[36px] focus:border-[rgb(200,200,200)] hover:border-[rgb(200,200,200)] outline-none" })
+                    @Html.ValidationMessageFor(temp => temp.PhoneNumber)
+                </div>
+                <div class="my-4">
+                    @Html.LabelFor(temp => temp.Address, new { @class = "text-black my-1 block font-normal" })
+                    @Html.TextBoxFor(temp => temp.Address, new { @class = "block p-2 border w-full h-[36px] focus:border-[rgb(200,200,200)] hover:border-[rgb(200,200,200)] outline-none" })
+                    @Html.ValidationMessageFor(temp => temp.Address)
+                </div>
+                <div class="my-4">
+                    @Html.LabelFor(temp => temp.Password, new { @class = "text-black my-1 block font-normal" })
+                    @Html.TextBoxFor(temp => temp.Password, new { type = "password" , @class = "block p-2 border w-full h-[36px] focus:border-[rgb(200,200,200)] hover:border-[rgb(200,200,200)] outline-none" })
+                    @Html.ValidationMessageFor(temp => temp.Password)
+                </div>
+                <div class="my-4">
+                    @Html.LabelFor(temp => temp.ConfirmPassword, new { @class = "text-black my-1 block font-normal" })
+                    @Html.TextBoxFor(temp => temp.ConfirmPassword, new { type = "password" , @class = "block p-2 border w-full h-[36px] focus:border-[rgb(200,200,200)] hover:border-[rgb(200,200,200)] outline-none" })
+                    @Html.ValidationMessageFor(temp => temp.ConfirmPassword)
+                </div>
+                <button type="submit"
+                        class="text-white duration-300 font-bold hover:bg-[#446084] bg-[#3ac2cc] py-2 px-4">
+                    Đăng Ký
+                </button>
+                <div class="my-4">
+                    <a href="/Auth/Login" class="text-black hover:text-[#3ac2cc]">
+                        Đã có tài khoản? Đăng nhập
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
